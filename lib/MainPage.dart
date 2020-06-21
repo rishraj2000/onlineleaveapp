@@ -188,6 +188,7 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _dateTime = DateTime.now();
+  DateTime _dAteTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,26 +213,26 @@ class _CalendarPageState extends State<CalendarPage> {
                 });
               } ),
            ),
+          
            RaisedButton(
              child: Text('Confirm'),
              onPressed:(){
                //Popping up an alert box when the button is pressed
                showDialog(context: context,
                builder: (_)=> AlertDialog(
-                 title: Text('Applying leave for'),
-                 content: Text('${_dateTime.day}/${_dateTime.month}/${_dateTime.year}\n${_dateTime.hour}:${_dateTime.minute}'),
+                 title: Text('Applying leave from'),
+                 content: Text('${_dateTime.day}/${_dateTime.month}/${_dateTime.year}\n${_dateTime.hour}:${_dateTime.minute}'
+                 ),
                ),
                );
              }),
              RaisedButton(
-               child: Text('Send letter to HOD'),
+               child: Text('Next'),
                onPressed: (){
-                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NextPage()));
-               },
-             ),
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>LastPage()));
+               }
+             )
+             
          ],
        ),
     );
@@ -249,6 +250,73 @@ class NextPage extends StatelessWidget {
         child: Card(
          child: Text('The letter has been sent to the HOD! Wait for approval!'),),
       )
+    );
+  }
+}
+
+class LastPage extends StatefulWidget {
+  @override
+  _LastPageState createState() => _LastPageState();
+}
+
+class _LastPageState extends State<LastPage> {
+   DateTime _dateTime1 = DateTime.now();
+  DateTime _dAteTime1 = DateTime.now();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+       appBar: AppBar(
+        title: Text('Last Date of leave'),
+
+      ),
+      body: 
+       Column(
+         children: <Widget>[
+           
+           SizedBox(
+             height: 400,
+                        child: CupertinoDatePicker(
+               
+              initialDateTime: _dateTime1,
+      
+              onDateTimeChanged:(finaldateTime){
+                print(finaldateTime);
+                setState(() {
+                  _dateTime1 = finaldateTime;
+                });
+              } ),
+           ),
+           RaisedButton(
+             child: Text('Confirm'),
+             onPressed:(){
+               //Popping up an alert box when the button is pressed
+               showDialog(context: context,
+               builder: (_)=> AlertDialog(
+                 title: Text('Last Date of leave'),
+                 content: Text('${_dateTime1.day}/${_dateTime1.month}/${_dateTime1.year}\n${_dateTime1.hour}:${_dateTime1.minute}'
+                 ),
+               ),
+               );
+             }),
+             RaisedButton(
+               child: Text('Send letter to HOD'),
+               onPressed: (){
+                 Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NextPage()));
+               },
+             ),])
+
+
+
+
+
+
+
+
+      
+      
     );
   }
 }
